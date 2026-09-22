@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>arabic-tafqeet — Arabic number to words (تفقيط) in JavaScript</title>
+<meta name="description" content="A small, dependency-free JavaScript function that spells numbers and amounts in Arabic words the way cheques and invoices need them: units before tens, the 3–10 gender rule, counted-noun forms, and مائتا/ألفا before a noun.">
+<style>
+  :root { --bg: #fbfaf7; --fg: #1d1f24; --muted: #5d6270; --line: #e3e0d8; --accent: #3b3fb6; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #15171c; --fg: #e8e6e1; --muted: #a3a7b3; --line: #2b2f38; --accent: #9ea2ff; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { font-size: 1.9rem; margin: 0 0 .3rem; } h2 { margin-top: 2.2rem; font-size: 1.25rem; }
+  .sub { color: var(--muted); margin: 0 0 1.6rem; }
+  a { color: var(--accent); }
+  code, pre { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+  pre { background: rgba(127,127,127,.08); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; font-size: .92rem; }
+  .ar { direction: rtl; font-family: "Noto Naskh Arabic", "Amiri", "Segoe UI", serif; font-size: 1.15rem; }
+  .demo { border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin: 1.2rem 0; }
+  .demo input { font: inherit; width: 12rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: inherit; }
+  .demo select { font: inherit; padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: inherit; }
+  #out { margin-top: 12px; min-height: 2.2rem; }
+  table { border-collapse: collapse; width: 100%; } td, th { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: start; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>arabic-tafqeet</h1>
+  <p class="sub">Spell numbers and amounts in Arabic words — <span class="ar">تفقيط</span> — the way cheques and invoices need them. One file, no dependencies, MIT.</p>
+
+  <div class="demo">
+    <label>Amount <input id="n" value="1250.50" inputmode="decimal"></label>
+    <select id="cur"><option value="EGP">EGP — جنيه</option><option value="USD">USD — دولار</option></select>
+    <div id="out" class="ar" aria-live="polite"></div>
+  </div>
+
+  <h2>Use it</h2>
+<pre>import { tafqeet, tafqeetAmount } from './tafqeet.js';
+
+tafqeet(1250750);       // مليون ومائتان وخمسون ألفاً وسبعمائة وخمسون
+tafqeetAmount(1250.5);  // فقط ألف ومائتان وخمسون جنيهاً وخمسون قرشاً لا غير</pre>
+
+  <h2>The rules it gets right</h2>
+  <table>
+    <tr><th>rule</th><th>right</th><th>what naive code writes</th></tr>
+    <tr><td>units before tens</td><td class="ar">خمسة وعشرون</td><td class="ar">عشرون وخمسة</td></tr>
+    <tr><td>3–10: plural noun</td><td class="ar">ثلاثة آلاف</td><td class="ar">ثلاثة ألف</td></tr>
+    <tr><td>11–99: accusative singular</td><td class="ar">أحد عشر ألفاً</td><td class="ar">أحد عشر آلاف</td></tr>
+    <tr><td>a dual before a noun drops ن</td><td class="ar">مائتا ألف</td><td class="ar">مائتان ألف</td></tr>
+  </table>
+  <p>Why each rule exists, and the bugs that found them: <a href="https://dev.to/support_confileo_ce7442eb">Spelling numbers in Arabic is harder than it looks</a>.</p>
+
+  <h2>Beyond this library</h2>
+  <p>This code counts masculine nouns in two currencies. For riyal, dirham and dinar, and for turning Arabic words back into digits, use the free online converter <a href="https://confileo.com/ar/tafqeet-alarqam/">تفقيط الأرقام — Arabic number to words for cheques and invoices</a>, part of <a href="https://confileo.com/">Confileo</a>, where this code came from.</p>
+
+  <footer>
+    <a href="https://github.com/mahmoudQq2023/arabic-tafqeet">Source on GitHub</a> · MIT © Mahmoud Daghash
+  </footer>
+</main>
+<script type="module">
+  import { tafqeetAmount } from './tafqeet.js';
+  const n = document.getElementById('n'), cur = document.getElementById('cur'), out = document.getElementById('out');
+  const run = () => {
+    const v = Number(String(n.value).replace(/[,\s]/g, ''));
+    try { out.textContent = Number.isFinite(v) && v >= 0 ? tafqeetAmount(v, cur.value) : ''; }
+    catch (e) { out.textContent = e.message; }
+  };
+  n.addEventListener('input', run); cur.addEventListener('change', run); run();
+</script>
+</body>
+</html>
