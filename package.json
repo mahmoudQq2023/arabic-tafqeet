@@ -1,0 +1,15 @@
+{
+  "name": "arabic-tafqeet",
+  "version": "1.0.0",
+  "description": "Spell numbers and amounts in Arabic words (تفقيط) the way cheques and invoices need them: units before tens, the 3–10 gender rule, the counted-noun forms, and مائتا/ألفا before a noun.",
+  "type": "module",
+  "main": "tafqeet.js",
+  "exports": "./tafqeet.js",
+  "files": ["tafqeet.js"],
+  "scripts": { "test": "node test.mjs" },
+  "keywords": ["arabic", "tafqeet", "number-to-words", "تفقيط", "cheque", "invoice", "i18n"],
+  "author": "Mahmoud Daghash",
+  "license": "MIT",
+  "homepage": "https://mahmoudqq2023.github.io/arabic-tafqeet/",
+  "repository": { "type": "git", "url": "https://github.com/mahmoudQq2023/arabic-tafqeet.git" }
+}
