@@ -21,7 +21,7 @@ Most number-to-words code translates digits one at a time, which fails in Arabic
 3. **The counted noun follows the last two digits.** 3–10 → plural (ثلاثة **آلاف**), 11–99 → singular accusative (أحد عشر **ألفاً**), a round hundred → singular (مائة **ألف**).
 4. **A dual in front of a noun drops its ن.** «مائتا ألف»، «ألفا جنيه»، not «مائتان ألف».
 
-The reasoning behind each rule, with the traps that produced them, is written up in [Spelling numbers in Arabic is harder than it looks](https://dev.to/support_confileo_ce7442eb).
+The reasoning behind each rule, with the traps that produced them, is written up in [Spelling numbers in Arabic is harder than it looks](https://dev.to/support_confileo_ce7442eb/spelling-numbers-in-arabic-is-harder-than-it-looks-the-four-rules-behind-tafqeet-3pgp).
 
 ## Not covered here
 
